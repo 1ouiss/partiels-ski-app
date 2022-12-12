@@ -1,4 +1,5 @@
-const commentModel = require('../models/comment.model')
+const commentModel = require('../models/comment.model');
+const postModel = require('../models/post.model');
 
 const commentController = {
     getAllComments: async (req, res) => {
@@ -21,6 +22,9 @@ const commentController = {
         try {
             const newComment = new commentModel(req.body);
             await newComment.save();
+            const post = await postModel.findById(newComment.post)
+            post.comments.push(newComment._id)
+            await post.save()
             res.send(newComment);
         } catch (error) {
             res.status(400).send({message: error.message})
@@ -37,7 +41,7 @@ const commentController = {
     delete: async (req, res) => {
         try {
             const comment = await commentModel.findByIdAndDelete(req.params.id)
-            res.status(204).send({message: "Comment deleted"});
+            res.status(204).send("deleted");
         } catch (error) {
             res.status(400).send({message: error.message})
         }

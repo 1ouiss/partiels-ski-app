@@ -1,4 +1,5 @@
-const bookingModel = require('../models/booking.model')
+const bookingModel = require('../models/booking.model');
+const postModel = require('../models/post.model');
 
 const bookingController = {
     getAllBookings: async (req, res) => {
@@ -21,6 +22,10 @@ const bookingController = {
         try {
             const newBooking = new bookingModel(req.body);
             await newBooking.save();
+            const post = await postModel.findById(newBooking.post)
+            post.bookings.push(newBooking._id)
+            post.isAvailable = false
+            await post.save()
             res.send(newBooking);
         } catch (error) {
             res.status(400).send({message: error.message})
