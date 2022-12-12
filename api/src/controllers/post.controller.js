@@ -11,7 +11,7 @@ const postController = {
     },
     getPostById: async (req, res) => {
         try {
-            const post = await postModel.findById(req.params.id).populate("Comment").populate("Booking")
+            const post = await postModel.findById(req.params.id).populate("comments").populate('bookings')
             res.send(post)
         } catch (error) {
             res.status(404).send({message: error.message})
