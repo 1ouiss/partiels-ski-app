@@ -7,6 +7,8 @@ const PostList = ({posts}) => {
 
     const [postsSearch, setPostsSearch] = useState([]);
     const [isSearch, setIsSearch] = useState(false)
+
+
     const [weight, setWeight] = useState('')
     const [style, setStyle] = useState('')
     const [height, setHeight] = useState('')
@@ -47,6 +49,7 @@ const PostList = ({posts}) => {
         setPostsSearch(filteredPosts);
         setIsSearch(true);
     }
+    
     const handleChangeHeight = (e) => {
         const height = e.target.value
         setStyle(height);
@@ -72,7 +75,7 @@ const PostList = ({posts}) => {
                     value={weight}
                     onChange={(e) => handleChangeWeight(e)}
                 >
-                    <MenuItem value={45}>Ten</MenuItem>
+                    <MenuItem value={45}>moins de 45kg</MenuItem>
                     <MenuItem value={46}>Twenty</MenuItem>
                     <MenuItem value={65}>Thirty</MenuItem>
                 </Select>
