@@ -33,6 +33,26 @@ const DetailPost = () => {
                 return
             </button>
             <h1>Detail Post</h1>
+            {
+                post && (
+                    <div>
+                        <h2>{post.title}</h2>
+                        <p>{post.description}</p>
+                        <p>{post.price}</p>
+                        <p>{post.location}</p>
+                        <p>{post.starts}</p>
+                    </div>
+                )
+            }
+            {
+                post.comments && post.comments.map((comment) => (
+                    <div key={comment._id}>
+                        <p>{comment.username}</p>
+                        <p>{comment.description}</p>
+                        <p>{comment.starts}</p>
+                    </div>
+                ))
+            }
 
             <FormComment id={id} fetchPost={fetchPost}/>
 
