@@ -1,6 +1,6 @@
 import {Select, MenuItem, InputLabel, FormControl} from '@mui/material';
 
-const Filter = ({data, setData, setDatas}) => {
+const WeightFilter = ({weight, setWeight}) => {
     return (
         <FormControl sx={{
             width: "200px"
@@ -10,15 +10,16 @@ const Filter = ({data, setData, setDatas}) => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Poids"
+                name='weight'
                 value={weight}
-                onChange={(e) => handleChangeWeight(e)}
+                onChange={(e) => setWeight(e)}
             >
-                <MenuItem value={45}>Ten</MenuItem>
-                <MenuItem value={46}>Twenty</MenuItem>
-                <MenuItem value={65}>Thirty</MenuItem>
+                <MenuItem value={45}>moins de 45kg</MenuItem>
+                <MenuItem value={46}>entre 45 et 65kg</MenuItem>
+                <MenuItem value={65}>plus de 65 kg</MenuItem>
             </Select>
         </FormControl>
     );
 }
  
-export default Filter;
+export default WeightFilter;

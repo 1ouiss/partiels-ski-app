@@ -1,17 +1,17 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import {Select, MenuItem, InputLabel, FormControl} from '@mui/material';
+import WeightFilter from "../components/WeightFilter";
+import StyleFilter from "../components/StyleFilter";
+import SizeFilter from "../components/SizeFilter";
+import PostCard from "../components/PostCard";
+import { Box, TextField } from "@mui/material";
 
 const PostList = ({posts}) => {
-    const navigate = useNavigate();
 
     const [postsSearch, setPostsSearch] = useState([]);
     const [isSearch, setIsSearch] = useState(false)
-
-
     const [weight, setWeight] = useState('')
     const [style, setStyle] = useState('')
-    const [height, setHeight] = useState('')
+    const [size, setSize] = useState('')
 
     const handleSearch = (e) => {
         const search = e.target.value;
@@ -27,7 +27,7 @@ const PostList = ({posts}) => {
     }
 
     const handleChangeWeight = (e) => {
-        const weight = e.target.value
+        const weight = e.target.value;
         setWeight(weight);
         if (weight === 45) {
             const filteredPosts = posts.filter(post => post.weight <= 45)
@@ -43,97 +43,45 @@ const PostList = ({posts}) => {
     }
 
     const handleChangeStyle = (e) => {
-        const style = e.target.value
+        const style = e.target.value;
         setStyle(style);
         const filteredPosts = posts.filter(post => post.style === style)
         setPostsSearch(filteredPosts);
         setIsSearch(true);
     }
-    
-    const handleChangeHeight = (e) => {
-        const height = e.target.value
-        setStyle(height);
-        const filteredPosts = posts.filter(post => post.height === height)
+
+    const handleChangeSize = (e) => {
+        const size = e.target.value
+        setSize(size);
+        console.log(e.target.value);
+        console.log(size);
+        const filteredPosts = posts.filter(post => post.size === size)
         setPostsSearch(filteredPosts);
         setIsSearch(true);
     }
 
+    
+
     return ( 
-        <div>
-            <h1>Post List</h1>
+        <>
 
-            <input type="text" onChange={(e) => handleSearch(e)} />
+            <TextField onChange={(e) => handleSearch(e)} id="outlined-basic" label="Recheche" variant="outlined" />
 
-            <FormControl sx={{
-                width: "200px"
-            }}>
-                <InputLabel id="demo-simple-select-label">Poids</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Poids"
-                    value={weight}
-                    onChange={(e) => handleChangeWeight(e)}
-                >
-                    <MenuItem value={45}>moins de 45kg</MenuItem>
-                    <MenuItem value={46}>Twenty</MenuItem>
-                    <MenuItem value={65}>Thirty</MenuItem>
-                </Select>
-            </FormControl>
+            <WeightFilter weight={weight} setWeight={handleChangeWeight}/>
+            <StyleFilter style={style} setStyle={handleChangeStyle}/>
+            <SizeFilter size={size} setSize={handleChangeSize}/>
 
-            <FormControl sx={{
-                width: "200px"
-            }}>
-                <InputLabel id="demo-simple-select-label">Style</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Style"
-                    value={style}
-                    onChange={(e) => handleChangeStyle(e)}
-                >
-                    <MenuItem value={"Freeride"}>Freeride</MenuItem>
-                    <MenuItem value={"Freestyle"}>Freestyle</MenuItem>
-                    <MenuItem value={"Piste"}>Piste</MenuItem>
-                    <MenuItem value={"Polyvalent"}>Polyalent</MenuItem>
-                </Select>
-            </FormControl>
-
-            <FormControl sx={{
-                width: "200px"
-            }}>
-                <InputLabel id="demo-simple-select-label">Style</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Style"
-                    value={height}
-                    onChange={(e) => handleChangeHeight(e)}
-                >
-                    <MenuItem value={"Freeride"}>Freeride</MenuItem>
-                    <MenuItem value={"Freestyle"}>Freestyle</MenuItem>
-                    <MenuItem value={"Piste"}>Piste</MenuItem>
-                    <MenuItem value={"Polyvalent"}>Polyalent</MenuItem>
-                </Select>
-            </FormControl>
-
-            <div>
+            <Box>
                 {
                     isSearch ? postsSearch.map(post => (
-                        <div key={post._id} onClick={() => navigate(`/${post._id}`)}>
-                            <h1>{post.title}</h1>
-                            <p>{post.description}</p>
-                        </div>
+                        <PostCard post={post}/>
                     )) :
                     posts.map(post => (
-                        <div key={post._id} onClick={() => navigate(`/${post._id}`)}>
-                            <h1>{post.title}</h1>
-                            <p>{post.description}</p>
-                        </div>
+                        <PostCard post={post}/>
                     ))
                 }
-            </div>
-        </div>
+            </Box>
+        </>
     );
 }
  

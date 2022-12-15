@@ -1,17 +1,17 @@
+import { Box, Container, Typography } from "@mui/material";
+
 const MainLayout = ({children}) => {
     return (
-        <>
-            <header>
-                <h1>My App</h1>
-                <ul>
-                    <li>Home</li>
-                    <li>About</li>
-                </ul>
-            </header>
-            <section>
+        <Container maxWidth="lg">
+            <Box variant="header">
+                <Typography variant="h5">
+                    My ski app v1
+                </Typography>
+            </Box>
+            <Box variant="section">
                 {children}
-            </section>
-        </>
+            </Box>
+        </Container>
     );
 }
  
